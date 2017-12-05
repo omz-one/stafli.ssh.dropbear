@@ -1,5 +1,5 @@
 #
-#    Stafli Base System (Makefile)
+#    Stafli Dropbear SSH Server (Makefile)
 #    Copyright (C) 2016-2017 Stafli
 #    Luís Pedro Algarvio
 #    This file is part of the Stafli Application Stack.
@@ -27,7 +27,7 @@ all: help
 
 help:
 	@echo "\
-Stafli Base System\n\
+Stafli Dropbear SSH Server\n\
 \n\
 Syntax:\n\
 make <command> DISTRO=<distribution>\n\
@@ -136,23 +136,23 @@ purge:
         ifeq ($(DISTRO), all)
 		@echo Purging containers, networks, volumes and images for debian8...
 		bash -c "(cd debian8; set -o allexport; source .env; set +o allexport; docker-compose down)";
-		docker image rm stafli/stafli.base.system:debian8_base;
+		docker image rm stafli/stafli.dropbear.ssh:debian8_dropbear;
 		@echo
 		@echo Purging containers, networks, volumes and images for debian7...
 		bash -c "(cd debian7; set -o allexport; source .env; set +o allexport; docker-compose down)";
-		docker image rm stafli/stafli.base.system:debian7_base;
+		docker image rm stafli/stafli.dropbear.ssh:debian7_dropbear;
 		@echo
 		@echo Purging containers, networks, volumes and images for centos7...
 		bash -c "(cd centos7; set -o allexport; source .env; set +o allexport; docker-compose down)";
-		docker image rm stafli/stafli.base.system:centos7_base;
+		docker image rm stafli/stafli.dropbear.ssh:centos7_dropbear;
 		@echo
 		@echo Purging containers, networks, volumes and images for centos6...
 		bash -c "(cd centos6; set -o allexport; source .env; set +o allexport; docker-compose down)";
-		docker image rm stafli/stafli.base.system:centos6_base;
+		docker image rm stafli/stafli.dropbear.ssh:centos6_dropbear;
         else
 		@echo Purging containers, networks, volumes and images for $(DISTRO)...
 		bash -c "(cd $(DISTRO); set -o allexport; source .env; set +o allexport; docker-compose down)";
-		docker image rm stafli/stafli.base.system:$(DISTRO)_base;
+		docker image rm stafli/stafli.dropbear.ssh:$(DISTRO)_dropbear;
         endif
 
 
@@ -162,19 +162,19 @@ img-ls:
 	@echo
         ifeq ($(DISTRO), all)
 		@echo Listing images for debian8...
-		docker image ls | grep -E "stafli/stafli.base.system.*debian8" | sort -n;
+		docker image ls | grep -E "stafli/stafli.dropbear.ssh.*debian8" | sort -n;
 		@echo
 		@echo Listing images for debian7...
-		docker image ls | grep -E "stafli/stafli.base.system.*debian7" | sort -n;
+		docker image ls | grep -E "stafli/stafli.dropbear.ssh.*debian7" | sort -n;
 		@echo
 		@echo Listing images for centos7...
-		docker image ls | grep -E "stafli/stafli.base.system.*centos7" | sort -n;
+		docker image ls | grep -E "stafli/stafli.dropbear.ssh.*centos7" | sort -n;
 		@echo
 		@echo Listing images for centos6...
-		docker image ls | grep -E "stafli/stafli.base.system.*centos6" | sort -n;
+		docker image ls | grep -E "stafli/stafli.dropbear.ssh.*centos6" | sort -n;
         else
 		@echo Listing images for $(DISTRO)...
-		docker image ls | grep -E "stafli/stafli.base.system.*$(DISTRO)" | sort -n;
+		docker image ls | grep -E "stafli/stafli.dropbear.ssh.*$(DISTRO)" | sort -n;
         endif
 
 
@@ -228,19 +228,19 @@ img-rm:
 	@echo
         ifeq ($(DISTRO), all)
 		@echo Removing images for debian8...
-		docker image rm stafli/stafli.base.system:debian8_base;
+		docker image rm stafli/stafli.dropbear.ssh:debian8_dropbear;
 		@echo
 		@echo Removing images for debian7...
-		docker image rm stafli/stafli.base.system:debian7_base;
+		docker image rm stafli/stafli.dropbear.ssh:debian7_dropbear;
 		@echo
 		@echo Removing images for centos7...
-		docker image rm stafli/stafli.base.system:centos7_base;
+		docker image rm stafli/stafli.dropbear.ssh:centos7_dropbear;
 		@echo
 		@echo Removing images for centos6...
-		docker image rm stafli/stafli.base.system:centos6_base;
+		docker image rm stafli/stafli.dropbear.ssh:centos6_dropbear;
         else
 		@echo Removing images for $(DISTRO)...
-		docker image rm stafli/stafli.base.system:$(DISTRO)_base;
+		docker image rm stafli/stafli.dropbear.ssh:$(DISTRO)_dropbear;
         endif
 
 
@@ -426,19 +426,19 @@ con-inspect:
 	@echo
         ifeq ($(DISTRO), all)
 		@echo Inspecting containers for debian8...
-		docker container inspect debian8_base_1;
+		docker container inspect debian8_dropbear_1;
 		@echo
 		@echo Inspecting containers for debian7...
-		docker container inspect debian7_base_1;
+		docker container inspect debian7_dropbear_1;
 		@echo
 		@echo Inspecting containers for centos7...
-		docker container inspect centos7_base_1;
+		docker container inspect centos7_dropbear_1;
 		@echo
 		@echo Inspecting containers for centos6...
-		docker container inspect centos6_base_1;
+		docker container inspect centos6_dropbear_1;
         else
 		@echo Inspecting containers for $(DISTRO)...
-		docker container inspect $(DISTRO)_base_1;
+		docker container inspect $(DISTRO)_dropbear_1;
         endif
 
 con-ips:
@@ -447,19 +447,19 @@ con-ips:
 	@echo
         ifeq ($(DISTRO), all)
 		@echo Showing IP addresses of containers for debian8...
-		docker container inspect debian8_base_1 | grep -e "inspect" -e "\"NetworkID\"" -B 0 -A 8;
+		docker container inspect debian8_dropbear_1 | grep -e "inspect" -e "\"NetworkID\"" -B 0 -A 8;
 		@echo
 		@echo Showing IP addresses of containers for debian7...
-		docker container inspect debian7_base_1 | grep -e "inspect" -e "\"NetworkID\"" -B 0 -A 8;
+		docker container inspect debian7_dropbear_1 | grep -e "inspect" -e "\"NetworkID\"" -B 0 -A 8;
 		@echo
 		@echo Showing IP addresses of containers for centos7...
-		docker container inspect centos7_base_1 | grep -e "inspect" -e "\"NetworkID\"" -B 0 -A 8;
+		docker container inspect centos7_dropbear_1 | grep -e "inspect" -e "\"NetworkID\"" -B 0 -A 8;
 		@echo
 		@echo Showing IP addresses of containers for centos6...
-		docker container inspect centos6_base_1 | grep -e "inspect" -e "\"NetworkID\"" -B 0 -A 8;
+		docker container inspect centos6_dropbear_1 | grep -e "inspect" -e "\"NetworkID\"" -B 0 -A 8;
         else
 		@echo Showing IP addresses of containers for $(DISTRO)...
-		docker container inspect $(DISTRO)_base_1 | grep -e "inspect" -e "\"NetworkID\"" -B 0 -A 8;
+		docker container inspect $(DISTRO)_dropbear_1 | grep -e "inspect" -e "\"NetworkID\"" -B 0 -A 8;
         endif
 
 
@@ -469,19 +469,19 @@ con-ports:
 	@echo
         ifeq ($(DISTRO), all)
 		@echo Showing ports of containers for debian8...
-		docker container port debian8_base_1;
+		docker container port debian8_dropbear_1;
 		@echo
 		@echo Showing ports of containers for debian7...
-		docker container port debian7_base_1;
+		docker container port debian7_dropbear_1;
 		@echo
 		@echo Showing ports of containers for centos7...
-		docker container port centos7_base_1;
+		docker container port centos7_dropbear_1;
 		@echo
 		@echo Showing ports of containers for centos6...
-		docker container port centos6_base_1;
+		docker container port centos6_dropbear_1;
         else
 		@echo Showing ports of containers for $(DISTRO)...
-		docker container port $(DISTRO)_base_1;
+		docker container port $(DISTRO)_dropbear_1;
         endif
 
 
@@ -491,19 +491,19 @@ con-top:
 	@echo
         ifeq ($(DISTRO), all)
 		@echo Showing processes of containers for debian8...
-		docker container top debian8_base_1;
+		docker container top debian8_dropbear_1;
 		@echo
 		@echo Showing processes of containers for debian7...
-		docker container top debian7_base_1;
+		docker container top debian7_dropbear_1;
 		@echo
 		@echo Showing processes of containers for centos7...
-		docker container top centos7_base_1;
+		docker container top centos7_dropbear_1;
 		@echo
 		@echo Showing processes of containers for centos6...
-		docker container top centos6_base_1;
+		docker container top centos6_dropbear_1;
         else
 		@echo Showing processes of containers for $(DISTRO)...
-		docker container top $(DISTRO)_base_1;
+		docker container top $(DISTRO)_dropbear_1;
         endif
 
 
