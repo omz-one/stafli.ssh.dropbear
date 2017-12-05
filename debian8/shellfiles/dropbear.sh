@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#    Debian 8 (jessie) Base System (shellscript)
+#    Debian 8 (jessie) Dropbear SSH Server (shellscript)
 #    Copyright (C) 2016-2017 Stafli
 #    Luís Pedro Algarvio
 #    This file is part of the Stafli Application Stack.
@@ -28,26 +28,22 @@ alias RUN='';
 shopt -s expand_aliases;
 
 # Load dockerfile
-source "$(dirname $(readlink -f $0))/../dockerfiles/base.dockerfile";
+source "$(dirname $(readlink -f $0))/../dockerfiles/dropbear.dockerfile";
 
 #
 # Cleanup
 #
 
 # Remove dupplicated services
-apt-get remove --purge -y dropbear supervisor;
+apt-get remove --purge -y dropbear;
 
 #
 # Configuration
 #
 
 # Enable daemon
-systemctl enable rsyslog.service;
-systemctl enable cron.service;
 systemctl enable ssh.service;
 
 # Start daemon
-systemctl restart rsyslog.service;
-systemctl restart cron.service;
 systemctl restart ssh.service;
 

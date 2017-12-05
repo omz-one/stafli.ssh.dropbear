@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#    Debian 7 (wheezy) Base System (shellscript)
+#    CentOS 6 (centos6) Dropbear Server (shellscript)
 #    Copyright (C) 2016-2017 Stafli
 #    Luís Pedro Algarvio
 #    This file is part of the Stafli Application Stack.
@@ -28,26 +28,22 @@ alias RUN='';
 shopt -s expand_aliases;
 
 # Load dockerfile
-source "$(dirname $(readlink -f $0))/../dockerfiles/base.dockerfile";
+source "$(dirname $(readlink -f $0))/../dockerfiles/dropbear.dockerfile";
 
 #
 # Cleanup
 #
 
 # Remove dupplicated services
-apt-get remove --purge -y dropbear supervisor;
+yum remove -y dropbear;
 
 #
 # Configuration
 #
 
 # Enable daemon
-update-rc.d rsyslog enable;
-update-rc.d cron enable;
-update-rc.d sshd enable;
+chkconfig sshd enable;
 
 # Start daemon
-service rsyslog restart;
-service cron restart;
 service sshd restart;
 
