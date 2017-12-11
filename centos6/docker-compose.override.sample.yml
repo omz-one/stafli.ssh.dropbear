@@ -27,7 +27,7 @@ version: '2'
 #
 services:
 
-  dropbear:
+  centos6_dropbear_ssh:
     build:
       args:
         app_dropbear_listen_port: "10022"

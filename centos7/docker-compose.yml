@@ -27,7 +27,7 @@ version: '2'
 #
 services:
 
-  dropbear:
+  centos7_dropbear_ssh:
     labels:
       - "org.label-schema.schema-version=1.0"
       - "org.label-schema.name=$PROJECT_NAME"
@@ -54,7 +54,7 @@ services:
       - "org.label-schema.os-architecture=$BUILD_ARCH"
       - "org.label-schema.version=$BUILD_VERSION"
       - "org.label-schema.build-date=$BUILD_DATE"
-    image: "stafli/stafli.dropbear.ssh:centos7_dropbear"
+    image: "${IMAGE_URL_PREFIX}:centos7_dropbear"
     build:
       context: "./dockerfiles"
       dockerfile: "dropbear.dockerfile"
