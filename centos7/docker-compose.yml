@@ -1,6 +1,6 @@
 ---
 #
-#    CentOS 7 (centos7) Dropbear SSH Server (docker-compose.yml)
+#    CentOS 7 (centos7) Dropbear2017 SSH Server (docker-compose.yml)
 #    Copyright (C) 2016-2017 Stafli
 #    Luís Pedro Algarvio
 #    This file is part of the Stafli Application Stack.
@@ -27,7 +27,7 @@ version: '2'
 #
 services:
 
-  centos7_dropbear_ssh:
+  ssh_dropbear2017_centos7:
     labels:
       - "org.label-schema.schema-version=1.0"
       - "org.label-schema.name=$PROJECT_NAME"
@@ -54,7 +54,7 @@ services:
       - "org.label-schema.os-architecture=$BUILD_ARCH"
       - "org.label-schema.version=$BUILD_VERSION"
       - "org.label-schema.build-date=$BUILD_DATE"
-    image: "${IMAGE_URL_PREFIX}:centos7_dropbear"
+    image: "${IMAGE_URL_PREFIX}:dropbear2017_centos7"
     build:
       context: "./dockerfiles"
       dockerfile: "dropbear.dockerfile"

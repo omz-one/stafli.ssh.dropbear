@@ -1,6 +1,6 @@
 # Stafli Dropbear SSH Server
 Stafli Dropbear SSH Server builds based on [Debian](https://www.debian.org) and [CentOS](https://www.centos.org), and developed as scripts for [Docker](https://www.docker.com).  
-Continues on [Stafli Base System](https://github.com/stafli-org/stafli.base.system) builds.  
+Continues on [Stafli Base System](https://github.com/stafli-org/stafli.system.base) builds.  
 This project is part of the [Stafli Application Stack](https://github.com/stafli-org).
 
 Requires [Docker Compose](https://docs.docker.com/compose) 1.6.x or higher due to the [version 2](https://docs.docker.com/compose/compose-file/#versioning) format of the docker-compose.yml files.
@@ -10,7 +10,7 @@ An optional [Makefile](../../tree/master/Makefile) is provided to help with load
 
 Scripts are also provided for each distribution to help test and deploy the installation procedures in non-Docker environments.
 
-The images are automatically built at a [repository](https://hub.docker.com/r/stafli/stafli.dropbear.ssh) in the Docker Hub registry.
+The images are automatically built at a [repository](https://hub.docker.com/r/stafli/stafli.ssh.dropbear) in the Docker Hub registry.
 
 ## Distributions
 The services use custom images as a starting point for the following distributions:
@@ -23,23 +23,25 @@ The services use custom images as a starting point for the following distributio
 
 ## Services
 These are the services described by the dockerfile and docker-compose files:
-- Dropbear, built on [Stafli Base System](https://github.com/stafli-org/stafli.base.system) and additional [Dropbear](https://matt.ucc.asn.au/dropbear/dropbear.html) packages
+- Dropbear 2012 (debian7), built on [Stafli Base System](https://github.com/stafli-org/stafli.system.base) and additional [Dropbear](https://matt.ucc.asn.au/dropbear/dropbear.html) packages
+- Dropbear 2014 (debian8), built on [Stafli Base System](https://github.com/stafli-org/stafli.system.base) and additional [Dropbear](https://matt.ucc.asn.au/dropbear/dropbear.html) packages
+- Dropbear 2017 (centos6 and centos7), built on [Stafli Base System](https://github.com/stafli-org/stafli.system.base) and additional [Dropbear](https://matt.ucc.asn.au/dropbear/dropbear.html) packages
 
 ## Images
-These are the [resulting images](https://hub.docker.com/r/stafli/stafli.dropbear.ssh/tags) upon building:
-- Dropbear:
-  - stafli/stafli.dropbear.ssh:debian8_dropbear
-  - stafli/stafli.dropbear.ssh:debian7_dropbear
-  - stafli/stafli.dropbear.ssh:centos7_dropbear
-  - stafli/stafli.dropbear.ssh:centos6_dropbear
+These are the [resulting images](https://hub.docker.com/r/stafli/stafli.ssh.dropbear/tags) upon building:
+- Dropbear 2012/2014/2017:
+  - stafli/stafli.ssh.dropbear:dropbear2014_debian8
+  - stafli/stafli.ssh.dropbear:dropbear2012_debian7
+  - stafli/stafli.ssh.dropbear:dropbear2017_centos7
+  - stafli/stafli.ssh.dropbear:dropbear2017_centos6
 
 ## Containers
 These containers can be created from the images:
-- Dropbear:
-  - debian8_dropbear_xxx
-  - debian7_dropbear_xxx
-  - centos7_dropbear_xxx
-  - centos6_dropbear_xxx
+- Dropbear 2012/2014/2017:
+  - stafli_ssh_dropbear2014_debian8_xxx
+  - stafli_ssh_dropbear2012_debian7_xxx
+  - stafli_ssh_dropbear2017_centos7_xxx
+  - stafli_ssh_dropbear2017_centos6_xxx
 
 ## Usage
 
@@ -56,19 +58,19 @@ Where <image_url> is the full image url (lookup the image list above).
 
 Example:
 ```
-docker pull stafli/stafli.dropbear.ssh:debian8_dropbear
+docker pull stafli/stafli.ssh.dropbear:dropbear2014_debian8
 
-docker run -ti stafli/stafli.dropbear.ssh:debian8_dropbear /bin/bash
+docker run -ti stafli/stafli.ssh.dropbear:dropbear2014_debian8 /bin/bash
 ```
 
 ### From GitHub repository (automated)
 
 Note: this method allows using docker-compose and the Makefile.
 
-1. Download the repository [zip file](https://github.com/stafli-org/stafli.dropbear.ssh/archive/master.zip) and unpack it or clone the repository using:  
-`git clone https://github.com/stafli-org/stafli.dropbear.ssh.git`
+1. Download the repository [zip file](https://github.com/stafli-org/stafli.ssh.dropbear/archive/master.zip) and unpack it or clone the repository using:  
+`git clone https://github.com/stafli-org/stafli.ssh.dropbear.git`
 2. Navigate to the project directory through the terminal:  
-`cd stafli.dropbear.ssh`
+`cd stafli.ssh.dropbear`
 3. Type in the desired operation through the terminal:  
 `make <operation> DISTRO=<distro>`
 
@@ -76,8 +78,8 @@ Where <distro> is the distribution/directory and <operation> is the desired dock
 
 Example:
 ```
-git clone https://github.com/stafli-org/stafli.dropbear.ssh.git;
-cd stafli.dropbear.ssh;
+git clone https://github.com/stafli-org/stafli.ssh.dropbear.git;
+cd stafli.ssh.dropbear;
 
 # Example #1: quick start, with build
 make up DISTRO=debian8;

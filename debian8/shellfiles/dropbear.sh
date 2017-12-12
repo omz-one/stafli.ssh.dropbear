@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#    Debian 8 (jessie) Dropbear SSH Server (shellscript)
+#    Debian 8 (jessie) Dropbear2014 SSH Server (shellscript)
 #    Copyright (C) 2016-2017 Stafli
 #    Luís Pedro Algarvio
 #    This file is part of the Stafli Application Stack.

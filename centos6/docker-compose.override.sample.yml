@@ -1,6 +1,6 @@
 ---
 #
-#    CentOS 6 (centos6) Dropbear SSH Server (docker-compose.override.sample.yml)
+#    CentOS 6 (centos6) Dropbear2017 SSH Server (docker-compose.override.sample.yml)
 #    Copyright (C) 2016-2017 Stafli
 #    Luís Pedro Algarvio
 #    This file is part of the Stafli Application Stack.
@@ -27,7 +27,7 @@ version: '2'
 #
 services:
 
-  centos6_dropbear_ssh:
+  ssh_dropbear2017_centos6:
     build:
       args:
         app_dropbear_listen_port: "10022"

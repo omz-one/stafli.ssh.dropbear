@@ -1,6 +1,6 @@
 ---
 #
-#    Debian 7 (wheezy) Dropbear SSH Server (docker-compose.override.sample.yml)
+#    Debian 7 (wheezy) Dropbear2012 SSH Server (docker-compose.override.sample.yml)
 #    Copyright (C) 2016-2017 Stafli
 #    Luís Pedro Algarvio
 #    This file is part of the Stafli Application Stack.
@@ -27,7 +27,7 @@ version: '2'
 #
 services:
 
-  debian7_dropbear_ssh:
+  ssh_dropbear2012_debian7:
     build:
       args:
         app_dropbear_listen_port: "10022"

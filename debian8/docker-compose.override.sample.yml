@@ -1,6 +1,6 @@
 ---
 #
-#    Debian 8 (jessie) Dropbear SSH Server (docker-compose.override.sample.yml)
+#    Debian 8 (jessie) Dropbear2014 SSH Server (docker-compose.override.sample.yml)
 #    Copyright (C) 2016-2017 Stafli
 #    Luís Pedro Algarvio
 #    This file is part of the Stafli Application Stack.
@@ -27,7 +27,7 @@ version: '2'
 #
 services:
 
-  debian8_dropbear_ssh:
+  ssh_dropbear2014_debian8:
     build:
       args:
         app_dropbear_listen_port: "10022"
