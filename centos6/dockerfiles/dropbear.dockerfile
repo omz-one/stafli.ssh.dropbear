@@ -19,7 +19,36 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+#
+# Build
+#
+
+# Base image to use
 FROM stafli/stafli.system.base:base10_centos6
+
+# Labels to apply
+LABEL description="Stafli Dropbear SSH Server (stafli/stafli.ssh.dropbear, Based on Stafli Base System (stafli/stafli.system.base)" \
+      maintainer="lp@algarvio.org" \
+      org.label-schema.schema-version="1.0.0-rc.1" \
+      org.label-schema.name="Stafli Dropbear SSH Server (stafli/stafli.ssh.dropbear)" \
+      org.label-schema.description="Based on Stafli Base System (stafli/stafli.system.base)" \
+      org.label-schema.keywords="stafli, dropbear, ssh, debian, centos" \
+      org.label-schema.url="https://stafli.org/" \
+      org.label-schema.license="GPLv3" \
+      org.label-schema.vendor-name="Stafli" \
+      org.label-schema.vendor-email="info@stafli.org" \
+      org.label-schema.vendor-website="https://www.stafli.org" \
+      org.label-schema.authors.lpalgarvio.name="Luis Pedro Algarvio" \
+      org.label-schema.authors.lpalgarvio.email="lp@algarvio.org" \
+      org.label-schema.authors.lpalgarvio.homepage="https://lp.algarvio.org" \
+      org.label-schema.authors.lpalgarvio.role="Maintainer" \
+      org.label-schema.registry-url="https://hub.docker.com/r/stafli/stafli.ssh.dropbear" \
+      org.label-schema.vcs-url="https://github.com/stafli-org/stafli.ssh.dropbear" \
+      org.label-schema.vcs-branch="master" \
+      org.label-schema.os-id="centos" \
+      org.label-schema.os-version-id="6" \
+      org.label-schema.os-architecture="amd64" \
+      org.label-schema.version="1.0"
 
 #
 # Arguments
@@ -28,6 +57,18 @@ FROM stafli/stafli.system.base:base10_centos6
 ARG app_dropbear_listen_addr="0.0.0.0"
 ARG app_dropbear_listen_port="22"
 ARG app_dropbear_key_size="4096"
+
+#
+# Environment
+#
+
+# Working directory to use when executing build and run instructions
+# Defaults to /.
+#WORKDIR /
+
+# User and group to use when executing build and run instructions
+# Defaults to root.
+#USER root:root
 
 #
 # Packages
@@ -42,7 +83,7 @@ RUN printf "Installing repositories and packages...\n" && \
     yum makecache && yum install -y \
       dropbear && \
     printf "Cleanup the Package Manager...\n" && \
-    yum clean all && rm -Rf /var/lib/yum/*; \
+    yum clean all && rm -Rf /var/lib/yum/* && \
     \
     printf "Finished installing repositories and packages...\n";
 
@@ -53,63 +94,63 @@ RUN printf "Installing repositories and packages...\n" && \
 # Update daemon configuration
 # - Supervisor
 # - Dropbear
-RUN printf "Updading Daemon configuration...\n"; \
+RUN printf "Updading Daemon configuration...\n" && \
     \
-    printf "Updading Supervisor configuration...\n"; \
+    printf "Updading Supervisor configuration...\n" && \
     \
     # init is not working at this point \
     \
     # /etc/supervisord.conf \
-    file="/etc/supervisord.conf"; \
-    printf "\n# Applying configuration for ${file}...\n"; \
+    file="/etc/supervisord.conf" && \
+    printf "\n# Applying configuration for ${file}...\n" && \
     printf "# rclocal\n\
 [program:rclocal]\n\
 command=/bin/bash -c \"/etc/rc.local\"\n\
 autostart=true\n\
 autorestart=false\n\
 startsecs=0\n\
-\n" >> ${file}; \
-    printf "Done patching ${file}...\n"; \
+\n" >> ${file} && \
+    printf "Done patching ${file}...\n" && \
     \
     # /etc/rc.local \
-    file="/etc/rc.local"; \
-    touch ${file} && chown root ${file} && chmod 755 ${file}; \
+    file="/etc/rc.local" && \
+    touch ${file} && chown root ${file} && chmod 755 ${file} && \
     \
     # /etc/supervisord.conf \
-    file="/etc/supervisord.conf"; \
-    printf "\n# Applying configuration for ${file}...\n"; \
+    file="/etc/supervisord.conf" && \
+    printf "\n# Applying configuration for ${file}...\n" && \
     printf "# Dropbear\n\
 [program:dropbear]\n\
 command=/bin/bash -c \"opts=\$(grep -o '^[^#]*' /etc/dropbear/dropbear.conf) && exec \$(which dropbear) \$opts -F\"\n\
 autostart=true\n\
 autorestart=true\n\
-\n" >> ${file}; \
-    printf "Done patching ${file}...\n"; \
+\n" >> ${file} && \
+    printf "Done patching ${file}...\n" && \
     \
-    printf "Updading Dropbear configuration...\n"; \
+    printf "Updading Dropbear configuration...\n" && \
     \
     # ignoring /etc/sysconfig/dropbear \
     \
     # /etc/dropbear/dropbear.conf \
-    file="/etc/dropbear/dropbear.conf"; \
+    file="/etc/dropbear/dropbear.conf" && \
     # clear old file
-    printf "#\n# dropbear.conf\n#\n" > ${file}; \
+    printf "#\n# dropbear.conf\n#\n" > ${file} && \
     # disable daemon/run in foreground \
-    printf "\n# Run in foreground mode\n#-F\n" >> ${file}; \
+    printf "\n# Run in foreground mode\n#-F\n" >> ${file} && \
     # change interface and port \
-    printf "\n# Listen on specified address and port (Default: 0.0.0.0:22)\n-p ${app_dropbear_listen_addr}:${app_dropbear_listen_port}\n" >> ${file}; \
+    printf "\n# Listen on specified address and port (Default: 0.0.0.0:22)\n-p ${app_dropbear_listen_addr}:${app_dropbear_listen_port}\n" >> ${file} && \
     # change ssh keys \
-    printf "\n# Use the following ssh keys:\n-r /etc/dropbear/dropbear_rsa_host_key\n" >> ${file}; \
-    printf "Done patching ${file}...\n"; \
+    printf "\n# Use the following ssh keys:\n-r /etc/dropbear/dropbear_rsa_host_key\n" >> ${file} && \
+    printf "Done patching ${file}...\n" && \
     \
     # Remove persistent ssh keys \
-    printf "\n# Removing persistent ssh keys...\n"; \
-    rm -f /etc/dropbear/*host_key; \
+    printf "\n# Removing persistent ssh keys...\n" && \
+    rm -f /etc/dropbear/*host_key && \
     \
     # /etc/rc.local \
-    file="/etc/rc.local"; \
-    printf "\n# Applying configuration for ${file}...\n"; \
-    perl -0p -i -e "s>\nexit 0>\n# exit 0\n>" ${file}; \
+    file="/etc/rc.local" && \
+    printf "\n# Applying configuration for ${file}...\n" && \
+    perl -0p -i -e "s>\nexit 0>\n# exit 0\n>" ${file} && \
     printf "\n\
 # Recreate dropbear private keys\n\
 # https://github.com/simonswine/docker-dropbear/blob/master/run.sh\n\
@@ -140,8 +181,20 @@ fi;\n\
 chown root:root \${SSH_KEY_RSA};\n\
 chmod 600 \${SSH_KEY_RSA};\n\
 \n\
-exit 0\n" >> ${file}; \
-    printf "Done patching ${file}...\n"; \
+exit 0\n" >> ${file} && \
+    printf "Done patching ${file}...\n" && \
     \
     printf "Finished Daemon configuration...\n";
+
+#
+# Run
+#
+
+# Command to execute
+# Defaults to /bin/bash.
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf", "--nodaemon"]
+
+# Ports to expose
+# Defaults to 22
+EXPOSE ${app_dropbear_listen_port}
 

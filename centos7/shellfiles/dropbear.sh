@@ -22,10 +22,15 @@
 # Workaround for docker commands
 alias FROM="#";
 alias MAINTAINER="#";
-alias ENV='export';
+alias LABEL="#";
 alias ARG='export';
+alias ENV='export';
 alias RUN='';
+alias CMD='#';
 shopt -s expand_aliases;
+
+# Load project settings
+source $(dirname "${BASH_SOURCE[0]}")/../.env;
 
 # Load dockerfile
 source "$(dirname $(readlink -f $0))/../dockerfiles/dropbear.dockerfile";
@@ -35,7 +40,7 @@ source "$(dirname $(readlink -f $0))/../dockerfiles/dropbear.dockerfile";
 #
 
 # Remove dupplicated services
-yum remove -y dropbear;
+#yum remove -y dropbear;
 
 #
 # Configuration
