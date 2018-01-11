@@ -24,14 +24,14 @@
 #
 
 # Base image to use
-FROM stafli/stafli.system.base:base10_debian7
+FROM stafli/stafli.init.supervisor:supervisor30_debian7
 
 # Labels to apply
-LABEL description="Stafli Dropbear SSH Server (stafli/stafli.ssh.dropbear, Based on Stafli Base System (stafli/stafli.system.base)" \
+LABEL description="Stafli Dropbear SSH Server (stafli/stafli.ssh.dropbear), Based on Stafli Init Supervisor (stafli/stafli.init.supervisor)" \
       maintainer="lp@algarvio.org" \
       org.label-schema.schema-version="1.0.0-rc.1" \
       org.label-schema.name="Stafli Dropbear SSH Server (stafli/stafli.ssh.dropbear)" \
-      org.label-schema.description="Based on Stafli Base System (stafli/stafli.system.base)" \
+      org.label-schema.description="Based on Stafli Init Supervisor (stafli/stafli.init.supervisor)" \
       org.label-schema.keywords="stafli, dropbear, ssh, debian, centos" \
       org.label-schema.url="https://stafli.org/" \
       org.label-schema.license="GPLv3" \
@@ -106,6 +106,12 @@ command=/bin/bash -c \"supervisorctl start rclocal; sleep 5; supervisorctl start
 autostart=true\n\
 autorestart=false\n\
 startsecs=0\n\
+stdout_logfile=/dev/stdout\n\
+stdout_logfile_maxbytes=0\n\
+stderr_logfile=/dev/stderr\n\
+stderr_logfile_maxbytes=0\n\
+stdout_events_enabled=true\n\
+stderr_events_enabled=true\n\
 \n" > ${file} && \
     printf "Done patching ${file}...\n" && \
     \
@@ -118,6 +124,12 @@ command=/bin/bash -c \"/etc/rc.local\"\n\
 autostart=false\n\
 autorestart=false\n\
 startsecs=0\n\
+stdout_logfile=/dev/stdout\n\
+stdout_logfile_maxbytes=0\n\
+stderr_logfile=/dev/stderr\n\
+stderr_logfile_maxbytes=0\n\
+stdout_events_enabled=true\n\
+stderr_events_enabled=true\n\
 \n" > ${file} && \
     printf "Done patching ${file}...\n" && \
     \
@@ -133,6 +145,12 @@ startsecs=0\n\
 command=/bin/bash -c \"opts=\$(grep -o '^[^#]*' /etc/dropbear/dropbear.conf) && exec \$(which dropbear) \$opts -F\"\n\
 autostart=false\n\
 autorestart=true\n\
+stdout_logfile=/dev/stdout\n\
+stdout_logfile_maxbytes=0\n\
+stderr_logfile=/dev/stderr\n\
+stderr_logfile_maxbytes=0\n\
+stdout_events_enabled=true\n\
+stderr_events_enabled=true\n\
 \n" > ${file} && \
     printf "Done patching ${file}...\n" && \
     \
