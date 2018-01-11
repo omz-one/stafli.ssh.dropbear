@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#    CentOS 6 (centos6) Dropbear2017 Server (shellscript)
+#    Debian 7 (wheezy) Dropbear2012 SSH Server (shellscript)
 #    Copyright (C) 2016-2017 Stafli
 #    Luís Pedro Algarvio
 #    This file is part of the Stafli Application Stack.
@@ -33,21 +33,21 @@ shopt -s expand_aliases;
 source $(dirname "${BASH_SOURCE[0]}")/../.env;
 
 # Load dockerfile
-source "$(dirname $(readlink -f $0))/../dockerfiles/dropbear.dockerfile";
+source "$(dirname $(readlink -f $0))/../dockerfiles/${IMAGE_TAG_PREFIX}${DISTRO_DEBIAN7_VERSION}.dockerfile";
 
 #
 # Cleanup
 #
 
 # Remove dupplicated services
-#yum remove -y dropbear;
+#apt-get remove --purge -y dropbear;
 
 #
 # Configuration
 #
 
 # Enable daemon
-chkconfig sshd enable;
+update-rc.d sshd enable;
 
 # Start daemon
 service sshd restart;
