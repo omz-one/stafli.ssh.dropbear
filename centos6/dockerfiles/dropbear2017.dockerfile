@@ -74,15 +74,15 @@ ARG app_dropbear_key_size="4096"
 # Packages
 #
 
-# Install daemon and utilities packages
+# Install dropbear packages
 #  - dropbear: for dropbear, a lightweight SSH2 server and client that replaces OpenSSH
 RUN printf "Installing repositories and packages...\n" && \
     \
-    printf "Install the required packages...\n" && \
+    printf "Install the selected packages...\n" && \
     rpm --rebuilddb && \
     yum makecache && yum install -y \
       dropbear && \
-    printf "Cleanup the Package Manager...\n" && \
+    printf "Cleanup the package manager...\n" && \
     yum clean all && rm -Rf /var/lib/yum/* && \
     \
     printf "Finished installing repositories and packages...\n";
