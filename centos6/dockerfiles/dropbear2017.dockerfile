@@ -24,7 +24,7 @@
 #
 
 # Base image to use
-FROM stafli/stafli.init.supervisor:supervisor21_centos6
+FROM stafli/stafli.init.supervisor:supervisor31_centos6
 
 # Labels to apply
 LABEL description="Stafli Dropbear SSH Server (stafli/stafli.ssh.dropbear), Based on Stafli Init Supervisor (stafli/stafli.init.supervisor)" \
@@ -98,14 +98,12 @@ RUN printf "Updading Daemon configuration...\n" && \
     \
     printf "Updading Supervisor configuration...\n" && \
     \
-    # init is not working at this point \
-    \
-    # /etc/supervisord.conf \
-    file="/etc/supervisord.conf" && \
+    # /etc/supervisord.d/init.conf \
+    file="/etc/supervisord.d/init.conf" && \
     printf "\n# Applying configuration for ${file}...\n" && \
-    printf "# rclocal\n\
-[program:rclocal]\n\
-command=/bin/bash -c \"/etc/rc.local\"\n\
+    printf "# init\n\
+[program:init]\n\
+command=/bin/bash -c \"supervisorctl start rclocal; sleep 5; supervisorctl start dropbear;\"\n\
 autostart=true\n\
 autorestart=false\n\
 startsecs=0\n\
@@ -115,20 +113,38 @@ stderr_logfile=/dev/stderr\n\
 stderr_logfile_maxbytes=0\n\
 stdout_events_enabled=true\n\
 stderr_events_enabled=true\n\
-\n" >> ${file} && \
+\n" > ${file} && \
+    printf "Done patching ${file}...\n" && \
+    \
+    # /etc/supervisord.d/rclocal.conf \
+    file="/etc/supervisord.d/rclocal.conf" && \
+    printf "\n# Applying configuration for ${file}...\n" && \
+    printf "# rclocal\n\
+[program:rclocal]\n\
+command=/bin/bash -c \"/etc/rc.local\"\n\
+autostart=false\n\
+autorestart=false\n\
+startsecs=0\n\
+stdout_logfile=/dev/stdout\n\
+stdout_logfile_maxbytes=0\n\
+stderr_logfile=/dev/stderr\n\
+stderr_logfile_maxbytes=0\n\
+stdout_events_enabled=true\n\
+stderr_events_enabled=true\n\
+\n" > ${file} && \
     printf "Done patching ${file}...\n" && \
     \
     # /etc/rc.local \
     file="/etc/rc.local" && \
     touch ${file} && chown root ${file} && chmod 755 ${file} && \
     \
-    # /etc/supervisord.conf \
-    file="/etc/supervisord.conf" && \
+    # /etc/supervisord.d/dropbear.conf \
+    file="/etc/supervisord.d/dropbear.conf" && \
     printf "\n# Applying configuration for ${file}...\n" && \
     printf "# Dropbear\n\
 [program:dropbear]\n\
 command=/bin/bash -c \"opts=\$(grep -o '^[^#]*' /etc/dropbear/dropbear.conf) && exec \$(which dropbear) \$opts -F\"\n\
-autostart=true\n\
+autostart=false\n\
 autorestart=true\n\
 stdout_logfile=/dev/stdout\n\
 stdout_logfile_maxbytes=0\n\
@@ -136,7 +152,7 @@ stderr_logfile=/dev/stderr\n\
 stderr_logfile_maxbytes=0\n\
 stdout_events_enabled=true\n\
 stderr_events_enabled=true\n\
-\n" >> ${file} && \
+\n" > ${file} && \
     printf "Done patching ${file}...\n" && \
     \
     printf "Updading Dropbear configuration...\n" && \
