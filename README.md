@@ -30,10 +30,10 @@ These are the services described by the dockerfile and docker-compose files:
 ## Images
 These are the [resulting images](https://hub.docker.com/r/stafli/stafli.ssh.dropbear/tags) upon building:
 - Dropbear 2012/2014/2017:
-  - stafli/stafli.ssh.dropbear:dropbear2014_debian8
-  - stafli/stafli.ssh.dropbear:dropbear2012_debian7
-  - stafli/stafli.ssh.dropbear:dropbear2017_centos7
-  - stafli/stafli.ssh.dropbear:dropbear2017_centos6
+  - stafli/stafli.ssh.dropbear:dropbear2014_debian8   [![](https://images.microbadger.com/badges/image/stafli/stafli.ssh.dropbear:dropbear2014_debian8.svg)](https://microbadger.com/images/stafli/stafli.ssh.dropbear:dropbear2014_debian8 "Get your own image badge on microbadger.com")
+  - stafli/stafli.ssh.dropbear:dropbear2012_debian7   [![](https://images.microbadger.com/badges/image/stafli/stafli.ssh.dropbear:dropbear2012_debian7.svg)](https://microbadger.com/images/stafli/stafli.ssh.dropbear:dropbear2012_debian7 "Get your own image badge on microbadger.com")
+  - stafli/stafli.ssh.dropbear:dropbear2017_centos7   [![](https://images.microbadger.com/badges/image/stafli/stafli.ssh.dropbear:dropbear2017_centos7.svg)](https://microbadger.com/images/stafli/stafli.ssh.dropbear:dropbear2017_centos7 "Get your own image badge on microbadger.com")
+  - stafli/stafli.ssh.dropbear:dropbear2017_centos6   [![](https://images.microbadger.com/badges/image/stafli/stafli.ssh.dropbear:dropbear2017_centos6.svg)](https://microbadger.com/images/stafli/stafli.ssh.dropbear:dropbear2017_centos6 "Get your own image badge on microbadger.com")
 
 ## Containers
 These containers can be created from the images:
