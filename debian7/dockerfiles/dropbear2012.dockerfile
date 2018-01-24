@@ -74,15 +74,22 @@ ARG app_dropbear_key_size="4096"
 # Packages
 #
 
-# Install dropbear packages
-#  - dropbear: for dropbear, a lightweight SSH2 server and client that replaces OpenSSH
+# Refresh the package manager
+# Install the selected packages
+#   Install the dropbear packages
+#    - dropbear: for dropbear, a lightweight SSH2 server and client that replaces OpenSSH
+# Cleanup the package manager
 RUN printf "Installing repositories and packages...\n" && \
     \
+    printf "Refresh the package manager...\n" && \
+    apt-get update && \
+    \
     printf "Install the selected packages...\n" && \
-    apt-get update && apt-get install -qy \
+    apt-get install -qy \
       dropbear && \
+    \
     printf "Cleanup the package manager...\n" && \
-    apt-get clean && rm -rf /var/lib/apt/lists/* && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* && rm -Rf /var/cache/apt/* && \
     \
     printf "Finished installing repositories and packages...\n";
 
